@@ -18,6 +18,8 @@ from preprocessing import (
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MODELS_DIR = os.path.join(BASE_DIR, 'backend', 'models')
+if not os.path.exists(MODELS_DIR):
+    MODELS_DIR = os.path.join(os.getcwd(), 'backend', 'models')
 
 
 # ==============================================================================

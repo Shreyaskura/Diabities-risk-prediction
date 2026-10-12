@@ -15,6 +15,8 @@ from preprocessing import FEATURE_COLUMNS
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RESULTS_DIR = os.path.join(BASE_DIR, 'results')
+if not os.path.exists(RESULTS_DIR):
+    RESULTS_DIR = os.path.join(os.getcwd(), 'results')
 METRICS_PATH = os.path.join(RESULTS_DIR, 'metrics.json')
 
 # Initialize FastAPI application
@@ -24,7 +26,7 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Enable CORS for React frontend (Vite default ports)
+# Enable CORS for React frontend (Vite default ports and Vercel production domains)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -56,6 +58,7 @@ def get_inference_service():
 # ==============================================================================
 
 @app.get("/", tags=["General"])
+@app.get("/api", tags=["General"])
 def root():
     """
     CO6: Root endpoint describing the ML system, models, and Course Outcomes.
@@ -80,6 +83,7 @@ def root():
 
 
 @app.get("/health", tags=["Monitoring"])
+@app.get("/api/health", tags=["Monitoring"])
 def health_check():
     """
     CO6: Health-check endpoint verifying model loading and system operational status.
@@ -97,6 +101,7 @@ def health_check():
 
 
 @app.get("/metrics", tags=["Evaluation"])
+@app.get("/api/metrics", tags=["Evaluation"])
 def get_model_metrics():
     """
     CO5 & CO6: Returns authentic measured performance metrics from train/test evaluation and 5-fold cross-validation.
@@ -113,6 +118,7 @@ def get_model_metrics():
 
 
 @app.get("/features", tags=["Metadata"])
+@app.get("/api/features", tags=["Metadata"])
 def get_features_metadata():
     """
     Returns clinical feature metadata and physiological boundary descriptions.
@@ -125,6 +131,7 @@ def get_features_metadata():
 
 
 @app.post("/predict", tags=["Inference"])
+@app.post("/api/predict", tags=["Inference"])
 def predict_diabetes_risk(patient: PatientFeatures):
     """
     CO6: Prediction-Serving Interface endpoint.
@@ -149,6 +156,7 @@ def predict_diabetes_risk(patient: PatientFeatures):
 
 
 @app.get("/results/chart/{chart_name}", tags=["Visualizations"])
+@app.get("/api/results/chart/{chart_name}", tags=["Visualizations"])
 def get_chart_image(chart_name: str):
     """
     Serves generated academic plots (confusion_matrix.png, roc_curve.png, model_comparison.png, etc.)

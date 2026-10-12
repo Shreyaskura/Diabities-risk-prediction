@@ -1,0 +1,10 @@
+.agent/
+.agents/
+.gemini/
+.gsd/
+notebooks/
+scripts/
+backend/__pycache__/
+api/__pycache__/
+frontend/node_modules/
+node_modules/

@@ -1,0 +1,41 @@
+{
+  "buildCommand": "cd frontend && npm install && npm run build",
+  "outputDirectory": "frontend/dist",
+  "framework": "vite",
+  "functions": {
+    "api/index.py": {
+      "includeFiles": "backend/**,results/**,dataset/**",
+      "maxDuration": 15
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/health",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/metrics",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/features",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/predict",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/results/chart/(.*)",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
