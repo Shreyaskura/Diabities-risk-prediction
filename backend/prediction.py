@@ -16,8 +16,12 @@ from preprocessing import (
     ZERO_AS_MISSING_COLUMNS
 )
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MODELS_DIR = os.path.join(BASE_DIR, 'backend', 'models')
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+PARENT_DIR = os.path.dirname(CURRENT_DIR)
+
+MODELS_DIR = os.path.join(CURRENT_DIR, 'models')
+if not os.path.exists(MODELS_DIR):
+    MODELS_DIR = os.path.join(PARENT_DIR, 'backend', 'models')
 if not os.path.exists(MODELS_DIR):
     MODELS_DIR = os.path.join(os.getcwd(), 'backend', 'models')
 

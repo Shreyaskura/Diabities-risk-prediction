@@ -13,10 +13,16 @@ from fastapi.responses import JSONResponse, FileResponse
 from prediction import PatientFeatures, ModelInferenceService
 from preprocessing import FEATURE_COLUMNS
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-RESULTS_DIR = os.path.join(BASE_DIR, 'results')
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+PARENT_DIR = os.path.dirname(CURRENT_DIR)
+
+# Look in backend/results first, then parent/results
+RESULTS_DIR = os.path.join(CURRENT_DIR, 'results')
+if not os.path.exists(RESULTS_DIR):
+    RESULTS_DIR = os.path.join(PARENT_DIR, 'results')
 if not os.path.exists(RESULTS_DIR):
     RESULTS_DIR = os.path.join(os.getcwd(), 'results')
+
 METRICS_PATH = os.path.join(RESULTS_DIR, 'metrics.json')
 
 # Initialize FastAPI application
@@ -123,7 +129,9 @@ def get_features_metadata():
     """
     Returns clinical feature metadata and physiological boundary descriptions.
     """
-    metadata_path = os.path.join(BASE_DIR, 'dataset', 'dataset_metadata.json')
+    metadata_path = os.path.join(CURRENT_DIR, 'dataset', 'dataset_metadata.json')
+    if not os.path.exists(metadata_path):
+        metadata_path = os.path.join(PARENT_DIR, 'dataset', 'dataset_metadata.json')
     if os.path.exists(metadata_path):
         with open(metadata_path, 'r') as f:
             return json.load(f)
