@@ -1,0 +1,75 @@
+{
+  "dataset_name": "Pima Indians Diabetes Database",
+  "source": "National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK)",
+  "total_records": 768,
+  "features_count": 8,
+  "target_column": "Outcome",
+  "classes": {
+    "0": "Non-Diabetic (500 records, 65.1%)",
+    "1": "Diabetic (268 records, 34.9%)"
+  },
+  "features": [
+    {
+      "name": "Pregnancies",
+      "type": "integer",
+      "description": "Number of times pregnant",
+      "zero_is_valid": true,
+      "clinical_range": "0 - 17"
+    },
+    {
+      "name": "Glucose",
+      "type": "numeric",
+      "description": "Plasma glucose concentration at 2 hours in an oral glucose tolerance test (mg/dL)",
+      "zero_is_valid": false,
+      "zero_count": 5,
+      "clinical_range": "70 - 200 mg/dL"
+    },
+    {
+      "name": "BloodPressure",
+      "type": "numeric",
+      "description": "Diastolic blood pressure (mm Hg)",
+      "zero_is_valid": false,
+      "zero_count": 35,
+      "clinical_range": "40 - 122 mm Hg"
+    },
+    {
+      "name": "SkinThickness",
+      "type": "numeric",
+      "description": "Triceps skin fold thickness (mm)",
+      "zero_is_valid": false,
+      "zero_count": 227,
+      "clinical_range": "7 - 99 mm"
+    },
+    {
+      "name": "Insulin",
+      "type": "numeric",
+      "description": "2-Hour serum insulin (mu U/ml)",
+      "zero_is_valid": false,
+      "zero_count": 374,
+      "clinical_range": "15 - 846 mu U/ml"
+    },
+    {
+      "name": "BMI",
+      "type": "numeric",
+      "description": "Body mass index (weight in kg/(height in m)^2)",
+      "zero_is_valid": false,
+      "zero_count": 11,
+      "clinical_range": "18.2 - 67.1"
+    },
+    {
+      "name": "DiabetesPedigreeFunction",
+      "type": "numeric",
+      "description": "Diabetes pedigree function (genetic score based on family history)",
+      "zero_is_valid": false,
+      "clinical_range": "0.078 - 2.42"
+    },
+    {
+      "name": "Age",
+      "type": "integer",
+      "description": "Age in years",
+      "zero_is_valid": false,
+      "clinical_range": "21 - 81 years"
+    }
+  ],
+  "preprocessing_notes": "Physiological zero values in Glucose, BloodPressure, SkinThickness, Insulin, and BMI represent missing measurements. In accordance with CO1 & CO2, these zeros are replaced with NaN and imputed using median statistics learned exclusively from training folds to prevent data leakage."
+}
